@@ -34,15 +34,24 @@ export default [
    *   -> Above, plus rules to enforce subjective community defaults to ensure consistency.
    */
   ...pluginVue.configs[ 'flat/essential' ],
-
+  
+   // this rules needs to be above the `vueTsEslintConfig`
+  {
+    rules: {
+      '@typescript-eslint/consistent-type-imports': [
+          'error',
+          { prefer: 'type-imports' }
+        ],
+    },
+  },
   // https://github.com/vuejs/eslint-config-typescript
   ...vueTsEslintConfig({
     // Optional: extend additional configurations from typescript-eslint'.
     // Supports all the configurations in
     // https://typescript-eslint.io/users/configs#recommended-configurations
     extends: [
-      // By default, only the recommended rules are enabled.
-      'recommended'
+      // By default, only the recommendedTypeChecked rules are enabled for typescript projects.
+      'recommendedTypeChecked'
       // You can also manually enable the stylistic rules.
       // "stylistic",
 
@@ -71,11 +80,6 @@ export default [
     // add your custom rules here
     rules: {
       'prefer-promise-reject-errors': 'off',
-      '@typescript-eslint/consistent-type-imports': [
-        'error',
-        { prefer: 'type-imports' }
-      ],
-
       // allow debugger during development only
       'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
     }
